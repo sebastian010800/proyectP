@@ -1,132 +1,80 @@
-/* ===== Cuenta regresiva para el 19 de julio ===== */
-(function countdownInit() {
-  const el = {
-    months: document.getElementById("cd-months"),
-    days: document.getElementById("cd-days"),
-    hours: document.getElementById("cd-hours"),
-    mins: document.getElementById("cd-mins"),
-    secs: document.getElementById("cd-secs"),
-  };
+/* ===== Código de acceso ===== */
+const CODE = "260809";
 
-  function targetDate() {
-    const now = new Date();
-    // 19 de julio de este año; si ya pasó, el del próximo año.
-    let target = new Date(now.getFullYear(), 6, 19, 0, 0, 0);
-    if (target - now < 0) target = new Date(now.getFullYear() + 1, 6, 19, 0, 0, 0);
-    return target;
-  }
+const gate = document.getElementById("lockGate");
+const form = document.getElementById("lockForm");
+const input = document.getElementById("codeInput");
+const errorMsg = document.getElementById("lockError");
+const letterWrap = document.getElementById("letterWrap");
 
-  function tick() {
-    const now = new Date();
-    const target = targetDate();
-    let diff = target - now;
-
-    if (diff <= 0) {
-      [el.months, el.days, el.hours, el.mins, el.secs].forEach((n) => n && (n.textContent = "0"));
-      return;
-    }
-
-    // Meses y días de calendario
-    let months = 0;
-    let cursor = new Date(now);
-    while (true) {
-      const next = new Date(cursor);
-      next.setMonth(next.getMonth() + 1);
-      if (next <= target) { months++; cursor = next; } else break;
-    }
-    const days = Math.floor((target - cursor) / 86400000);
-    const hours = Math.floor(diff / 3600000) % 24;
-    const mins = Math.floor(diff / 60000) % 60;
-    const secs = Math.floor(diff / 1000) % 60;
-
-    if (el.months) el.months.textContent = months;
-    if (el.days) el.days.textContent = days;
-    if (el.hours) el.hours.textContent = hours;
-    if (el.mins) el.mins.textContent = mins;
-    if (el.secs) el.secs.textContent = secs;
-  }
-
-  tick();
-  setInterval(tick, 1000);
-})();
-
-/* ===== Contador: se encoge y se va a la derecha al hacer scroll ===== */
-(function countdownScroll() {
-  const bar = document.querySelector(".countdown-bar");
-  if (!bar) return;
-
-  function onScroll() {
-    if (window.scrollY > 60) bar.classList.add("shrink");
-    else bar.classList.remove("shrink");
-  }
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-})();
-
-const text = `Lau, hice esto para ti porque sé que a veces los días se sienten raros o pesados. No es una página perfecta, pero sí está hecha con una intención bonita: recordarte que eres especial, que tienes muchas versiones lindas y que hasta una orquídea roja se queda corta para describir lo única que eres.`;
-
-const typed = document.getElementById("typed");
-let idx = 0;
-
-function typeWriter() {
-  if (idx <= text.length) {
-    typed.textContent = text.slice(0, idx);
-    idx++;
-    setTimeout(typeWriter, idx < 25 ? 38 : 24);
-  }
+function unlock() {
+  gate.classList.add("hidden");
+  letterWrap.classList.remove("locked");
+  document.body.style.overflow = "";
+  // Arranca los reveals que ya estén en pantalla
+  setTimeout(() => burstPetals(30), 300);
 }
 
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const value = input.value.trim();
+  if (value === CODE) {
+    errorMsg.hidden = true;
+    unlock();
+  } else {
+    errorMsg.hidden = false;
+    gate.classList.add("shake");
+    input.value = "";
+    setTimeout(() => gate.classList.remove("shake"), 450);
+  }
+});
+
+// Bloquea el scroll del fondo mientras el candado esté visible
+document.body.style.overflow = "hidden";
+
+/* ===== Video principal: arranca en el segundo 2 ===== */
+(function mainVideoStart() {
+  const video = document.getElementById("mainVideo");
+  if (!video) return;
+  const START = 2;
+
+  function seekStart() {
+    try { if (video.currentTime < START) video.currentTime = START; } catch (_) {}
+  }
+
+  video.addEventListener("loadedmetadata", seekStart);
+  // Al reiniciar el loop, vuelve al segundo 2 en lugar de al 0
+  video.addEventListener("timeupdate", () => {
+    if (video.currentTime < START - 0.1) video.currentTime = START;
+  });
+  video.addEventListener("seeked", () => {}, { once: true });
+})();
+
+/* ===== Reveal al hacer scroll ===== */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add("show");
-      if (entry.target.closest("#mensaje") && idx === 0) typeWriter();
+      observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.18 });
+}, { threshold: 0.15 });
 
-document.querySelectorAll(".reveal, .barbie-card").forEach((el) => observer.observe(el));
-observer.observe(document.querySelector("#mensaje"));
+document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-const response = document.getElementById("response");
-document.querySelectorAll(".chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    document.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-    chip.classList.add("active");
-    response.textContent = chip.dataset.msg;
-    burstPetals(14);
-  });
-});
-
+/* ===== Pétalos flotantes ===== */
 const petalsLayer = document.getElementById("petals");
-const petalBtn = document.getElementById("petalBtn");
 
-function burstPetals(amount = 30) {
+function burstPetals(amount = 24) {
   for (let i = 0; i < amount; i++) {
     const petal = document.createElement("span");
     petal.className = "floating-petal";
-    petal.textContent = ["🌺", "💮", "🌸", "✨"][Math.floor(Math.random() * 4)];
+    petal.textContent = ["🌺", "💮", "🌸", "✨", "💗"][Math.floor(Math.random() * 5)];
     petal.style.left = Math.random() * 100 + "vw";
-    petal.style.animationDuration = (3 + Math.random() * 3.8) + "s";
-    petal.style.animationDelay = Math.random() * .8 + "s";
-    petal.style.opacity = .45 + Math.random() * .5;
+    petal.style.animationDuration = (3.4 + Math.random() * 4) + "s";
+    petal.style.animationDelay = Math.random() * 0.8 + "s";
+    petal.style.opacity = 0.4 + Math.random() * 0.5;
     petalsLayer.appendChild(petal);
-    setTimeout(() => petal.remove(), 7600);
+    setTimeout(() => petal.remove(), 8200);
   }
 }
-
-petalBtn.addEventListener("click", () => burstPetals(42));
-
-document.addEventListener("click", (event) => {
-  if (event.target.closest("button, a")) return;
-  const heart = document.createElement("span");
-  heart.className = "heart-pop";
-  heart.textContent = ["🌺", "✨", "💗"][Math.floor(Math.random() * 3)];
-  heart.style.left = event.clientX + "px";
-  heart.style.top = event.clientY + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 950);
-});
-
-setTimeout(() => burstPetals(18), 900);

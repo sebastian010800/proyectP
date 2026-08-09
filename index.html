@@ -2,217 +2,122 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para Lau 🌺</title>
-  <meta name="description" content="Un pequeño detalle con orquídeas, velocidad y cosas bonitas para Lau." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Una carta para ti 🌺</title>
+  <meta name="description" content="Una carta especial, guardada con cariño." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="noise"></div>
-  <div class="race-lines" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="floating-petals" id="petals" aria-hidden="true"></div>
+
+  <!-- ===== Candado / Código ===== -->
+  <div class="lock-gate" id="lockGate">
+    <div class="lock-card">
+      <span class="lock-icon">🔒</span>
+      <h1>Esta carta es solo para ti</h1>
+      <p>Escribe el código para poder leerla.</p>
+
+      <form class="lock-form" id="lockForm" autocomplete="off">
+        <input
+          id="codeInput"
+          class="lock-input"
+          type="tel"
+          inputmode="numeric"
+          maxlength="6"
+          placeholder="• • • • • •"
+          aria-label="Código de acceso"
+        />
+        <button class="lock-btn" type="submit">Abrir 🌺</button>
+      </form>
+
+      <p class="lock-error" id="lockError" hidden>Ese no es el código. Inténtalo otra vez 🫶🏻</p>
+      <p class="lock-hint">Pista: una fecha muy nuestra.</p>
+    </div>
   </div>
-  <div class="floating-petals" id="petals"></div>
 
-  <header>
-    <div class="wrap nav">
-      <div class="brand">
-        <span class="dot">🌺</span>
-        <span>Un detalle para Lau</span>
-      </div>
-      <nav class="nav-links" aria-label="Secciones">
-        <a href="#galeria">Lau</a>
-        <a href="#orquideas">Orquídeas</a>
-        <a href="#carta">Carta</a>
-        <a href="#mensaje">Mensaje</a>
-      </nav>
-    </div>
-
-    <div class="wrap">
-      <div class="countdown-bar">
-        <p class="cd-title">Cuenta regresiva para el <span>19 de julio</span> 🌺</p>
-        <div class="countdown" id="countdown" role="timer" aria-live="polite">
-          <div class="cd-cell"><b id="cd-months">0</b><small>Meses</small></div>
-          <div class="cd-cell"><b id="cd-days">0</b><small>Días</small></div>
-          <div class="cd-cell"><b id="cd-hours">0</b><small>Horas</small></div>
-          <div class="cd-cell"><b id="cd-mins">0</b><small>Minutos</small></div>
-          <div class="cd-cell"><b id="cd-secs">0</b><small>Segundos</small></div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="wrap hero" id="inicio">
-      <div>
-        <div class="pill">🌺 Orquídeas rojas · modo sonrisa activado</div>
-        <h1>Para que Lau vuelva a sonreír <span class="gradient-text">un poquito más</span></h1>
-        <p>
-          Esta página no viene a arreglar todo de golpe. Viene como un ramo digital:
-          con orquídeas, velocidad, películas, Barbie y pequeños guiños para recordarte
-          que incluso en días pesados sigues siendo una persona muy especial.
-        </p>
-        <div class="hero-actions">
-          <a class="btn" href="#mensaje">Abrir el mensajito ✨</a>
-          <button class="btn secondary" id="petalBtn" type="button">Lluvia de orquídeas 🌺</button>
-        </div>
-      </div>
-
-      <div class="stage" id="orquideas" aria-label="Ramo animado de orquídeas rojas">
-        <div class="orb"></div>
-        <div class="orchid-card">
-          <div class="orchid-inner">
-            <div class="bouquet">
-              <span class="stem s1"></span>
-              <span class="stem s2"></span>
-              <span class="stem s3"></span>
-              <span class="stem s4"></span>
-
-              <div class="flower f1">
-                <span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="lip"></span>
-              </div>
-              <div class="flower f2">
-                <span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="lip"></span>
-              </div>
-              <div class="flower f3">
-                <span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="lip"></span>
-              </div>
-              <div class="flower f4">
-                <span class="petal p1"></span><span class="petal p2"></span><span class="petal p3"></span><span class="petal p4"></span><span class="petal p5"></span><span class="lip"></span>
-              </div>
-            </div>
-
-            <div class="card-caption">
-              <strong>Orquídeas rojas para Lau</strong>
-              <span>Porque hay personas que no se regalan con cualquier flor: se merecen algo único, elegante y hecho con intención.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap" id="galeria">
-      <div class="section-title">
-        <h2>Lau, en todas sus versiones bonitas</h2>
-        <p>Doctora, arquitecta y, sobre todo, una persona con un corazón enorme. Aquí van unos recordatorios para ti.</p>
-      </div>
-
-      <div class="gallery">
-        <div class="feature reveal">
-          <div class="feature-img">
-            <img src="imagenes/laura-doctora.png" alt="Ilustración de Lau como doctora rodeada de orquídeas" loading="lazy" />
-          </div>
-          <div class="feature-text">
-            <span class="feature-tag">🩺 Camino a ser doctora</span>
-            <h3>Sigue con tu carrera, vas a lograrlo</h3>
-            <p>
-              Sé que estudiar no siempre es fácil: hay trasnochadas, parciales y días donde
-              dan ganas de rendirse. Pero cada esfuerzo te acerca un poquito más a esa bata
-              blanca que tanto sueñas. El mundo necesita doctoras como tú: con conocimiento
-              en la cabeza y ternura en el corazón. No te rindas, Lau, vas por muy buen camino.
-            </p>
-          </div>
-        </div>
-
-        <div class="feature reverse reveal">
-          <div class="feature-img">
-            <img src="imagenes/laura-arquitecta.png" alt="Ilustración de Lau como arquitecta rodeada de orquídeas" loading="lazy" />
-          </div>
-          <div class="feature-text">
-            <span class="feature-tag">🏛️ Camino a ser arquitecta</span>
-            <h3>Tú construyes futuros, empezando por el tuyo</h3>
-            <p>
-              Cada plano, cada entrega y cada noche de diseño están construyendo a la
-              profesional increíble que vas a ser. Habrá materias difíciles, pero tú tienes
-              la creatividad y la disciplina para superarlas. Sigue avanzando un paso a la vez:
-              ese título es tuyo y estoy seguro de que lo vas a alcanzar. 💪🏻</p>
-          </div>
-        </div>
-
-        <div class="love-panel">
-          <article class="love-note reveal">
-            <span class="emoji">🌸</span>
-            <h3>Eres una persona hermosa</h3>
-            <p>Y no solo por fuera. Tu forma de ser, de cuidar y de brillar hace que todo a tu alrededor se vea más lindo. Eres única, elegante y difícil de olvidar.</p>
-          </article>
-
-          <article class="love-note reveal">
-            <span class="emoji">🍃</span>
-            <h3>Está tranquila</h3>
-            <p>No tienes que poder con todo hoy. Respira, ve despacio y date permiso de descansar. Los días pesados también pasan, y tú siempre sabes cómo florecer de nuevo.</p>
-          </article>
-
-          <article class="love-note reveal">
-            <span class="emoji">💗</span>
-            <h3>Nunca estás sola</h3>
-            <p>Cuando te sientas sola o el día se ponga gris, recuerda esto: estoy solo a un botón de distancia. Escríbeme cuando quieras, siempre voy a estar para ti.</p>
-          </article>
-        </div>
-
-        <div class="love-cta">
-          <div class="love-cta-text">
-            <strong>¿Te sientes sola ahora mismo?</strong>
-            <span>Toca el botón y hablamos. No importa la hora. 🌺</span>
-          </div>
-          <a class="btn whatsapp" href="https://wa.me/573225384903?text=Hola%2C%20vi%20la%20p%C3%A1gina%20que%20hiciste%20para%20m%C3%AD%20%F0%9F%8C%BA" target="_blank" rel="noopener">
-            💬 Escríbeme por WhatsApp
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap" id="carta">
-      <article class="letter reveal">
+  <!-- ===== Carta (difuminada hasta desbloquear) ===== -->
+  <main class="letter-wrap locked" id="letterWrap">
+    <article class="letter">
+      <header class="letter-head reveal">
         <span class="letter-seal">🌺</span>
-        <p class="letter-greeting">Para ti, Lau</p>
+        <p class="letter-greeting">Lau</p>
+        <p class="letter-sub">Una carta para ti 🫶🏻</p>
+      </header>
 
-        <div class="letter-body">
-          <p>Lau, no quiero que te preocupes ni que cargues todo solita. Sé que a veces hay días pesados, días donde uno no se siente bien ni consigo mismo, pero quiero que sepas algo: para mí tú eres una persona demasiado valiosa.</p>
+      <div class="letter-body">
+        <p class="reveal">Hace dos meses y medio te conozco y, sinceramente, desde el primer momento hubo algo en ti que me movió de una forma que no esperaba. No sé exactamente qué hiciste ni qué pasó, pero genuinamente empezaste a convertirte en alguien muy especial para mí.</p>
 
-          <p>En muy poquito tiempo te ganaste un lugar muy bonito en mi corazón, y aunque a veces digas que hay días en los que estás fea o apagada, yo nunca te he visto así. Desde que te vi me pareciste hermosa, y cada vez que te veo me gustas más.</p>
+        <p class="reveal">Mientras escribo esta carta estoy un poco bloqueado, porque hay cosas que siento que son mucho más fáciles de sentir que de explicar. Y tampoco quiero sonar demasiado empalagoso ni llenarte de palabras bonitas solo por decirlas. Quiero hablarte desde lo que realmente siento.</p>
 
-          <p>No tienes que estar feliz todo el tiempo, pero sí quiero que sepas que cuando estés triste, aquí estoy. Te puedo escuchar, acompañar o simplemente estar contigo para que no te sientas sola.</p>
+        <!-- Foto 1 -->
+        <figure class="media reveal">
+          <img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM.jpeg" alt="Un recuerdo especial" loading="lazy" />
+        </figure>
 
-          <p>Yo voy a hacer lo posible por sumarte paz, sonrisas y tranquilidad, porque verte bien me importa mucho. Y si hoy no es un día bonito, yo te recuerdo algo: tú sí lo eres. 🫶🏻</p>
-        </div>
+        <p class="reveal">En este tiempo me he dado cuenta de que, a pesar de las cosas que hemos vivido y de todo lo que todavía nos falta por conocer el uno del otro, quiero empezar a construir cosas especiales contigo.</p>
 
-        <div class="letter-actions">
-          <a class="btn whatsapp" href="https://wa.me/573225384903?text=Hola%2C%20vi%20la%20p%C3%A1gina%20que%20hiciste%20para%20m%C3%AD%20%F0%9F%8C%BA" target="_blank" rel="noopener">
-            💬 Escríbeme cuando quieras
-          </a>
-        </div>
-      </article>
-    </section>
+        <p class="reveal">Y cuando hablo de construir, no me refiero solamente a imaginar un futuro en el que simplemente estemos juntos o nos apoyemos mutuamente. Quiero que podamos trabajar en algo bonito, algo que crezca con nosotros, que nos haga mejores y que, con el tiempo, pueda llegar a ser incluso más grande que nosotros mismos.</p>
 
-    <section class="wrap" id="mensaje">
-      <div class="message">
-        <h2>Un mensajito para Lau</h2>
-        <div class="typebox">
-          <span id="typed"></span><span class="cursor"></span>
-        </div>
+        <!-- Video principal: arranca en 0:02, horizontal -->
+        <figure class="media media-video media-rotate reveal">
+          <video
+            id="mainVideo"
+            class="video-horizontal"
+            playsinline
+            muted
+            loop
+            controls
+            preload="metadata"
+            poster=""
+          >
+            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM (1).mp4#t=2" type="video/mp4" />
+            Tu navegador no puede reproducir este video.
+          </video>
+        </figure>
 
-        <div class="mini-game" aria-label="Botones de mensajes bonitos">
-          <button class="chip" data-msg="Hoy no tienes que poder con todo. Con respirar, descansar y dejarte querer un poquito ya estás haciendo bastante.">Para un día pesado</button>
-          <button class="chip" data-msg="Tus versiones —la Barbie secretaria, la arquitecta, la médica, la de las películas, la de las caminatas— todas tienen algo muy lindo.">Versiones de Lau</button>
-          <button class="chip" data-msg="Declaración oficial: esta página queda en pole position para recordarte que mereces cosas bonitas, incluso en días grises.">F1 mode</button>
-          <button class="chip" data-msg="Las orquídeas rojas no son cualquier flor. Son para alguien única, elegante y con una forma muy especial de quedarse en la mente.">Orquídeas</button>
-        </div>
+        <p class="reveal">No quiero decirte palabras exageradas ni prometerte cosas imposibles. Solo quiero ser sincero contigo: me haces feliz, disfruto muchísimo estar a tu lado y cada día tengo más ganas de seguir conociéndote, de compartir nuevas experiencias contigo y de descubrir qué podemos construir juntos.</p>
 
-        <div class="response" id="response">
-          Toca un botón para desbloquear otro mensajito bonito ✨
-        </div>
+        <p class="reveal">También creo mucho que Dios pone personas en nuestro camino por alguna razón, y siento que tú llegaste al mío por una razón muy bonita.</p>
+
+        <!-- Foto 2 -->
+        <figure class="media media-full reveal">
+          <img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM (1).jpeg" alt="Otro recuerdo bonito" loading="lazy" />
+        </figure>
+
+        <p class="reveal">Cuando te conocí, yo no estaba buscando a nadie. En realidad, estaba buscándome a mí mismo. Estaba intentando conocerme mejor, crecer y trabajar todos los días para convertirme en la mejor versión que puede ser Sebastián. Y eso sigue siendo algo que quiero hacer por mí, pero ahora siento que también tengo una motivación más para seguir dando lo mejor de mí.</p>
+
+        <p class="reveal">No porque mi felicidad dependa de ti, sino porque compartir mi camino contigo me inspira a seguir creciendo, a ser mejor y a cuidar lo bonito que poco a poco hemos ido creando.</p>
+
+        <!-- Video secundario -->
+        <figure class="media media-video reveal">
+          <video class="video-horizontal" playsinline muted loop controls preload="metadata">
+            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM.mp4" type="video/mp4" />
+          </video>
+        </figure>
+
+        <p class="reveal">No sé exactamente qué nos espera más adelante, y creo que tampoco tenemos que saberlo todo desde ahora. Lo que sí sé es que quiero seguir descubriéndolo contigo.</p>
+
+        <!-- Video de cierre -->
+        <figure class="media media-video reveal">
+          <video class="video-horizontal" playsinline muted loop controls preload="metadata">
+            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.02 PM.mp4" type="video/mp4" />
+          </video>
+        </figure>
+
+        <p class="reveal letter-turn">Y bueno…</p>
+
+        <!-- Foto final (antes del último párrafo) -->
+        <figure class="media media-full reveal">
+          <img src="imagenes/WhatsApp Image 2026-08-09 at 6.08.34 PM.jpeg" alt="Una foto para cerrar" loading="lazy" />
+        </figure>
+
+        <p class="reveal letter-question">Después de todo esto, hay una pregunta que para mí es muy importante.</p>
+
+        
       </div>
-    </section>
+    </article>
   </main>
-
-  <footer class="wrap">
-    Hecho con orquídeas, cariño y la intención de recordarte lo especial que eres. 🌺🫶🏻
-  </footer>
-
-  <a class="wa-float" href="https://wa.me/573225384903?text=Hola%2C%20vi%20la%20p%C3%A1gina%20que%20hiciste%20para%20m%C3%AD%20%F0%9F%8C%BA" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp">
-    <span class="wa-icon">💬</span>
-    <span class="wa-label">A un botón de distancia</span>
-  </a>
 
   <script src="script.js"></script>
 </body>
