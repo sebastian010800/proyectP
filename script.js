@@ -99,6 +99,13 @@ mainVideo.addEventListener("loadedmetadata", seekStart);
 mainVideo.addEventListener("timeupdate", seekStart);
 const videos = [...document.querySelectorAll("video")];
 videos.forEach((video) => video.addEventListener("play", () => videos.forEach((other) => { if (other !== video) other.pause(); })));
+const mobileView = window.matchMedia("(max-width: 480px)");
+videos.forEach((video, index) => video.addEventListener("ended", () => {
+  if (!mobileView.matches) return;
+  const nextVideo = videos[(index + 1) % videos.length];
+  nextVideo.closest(".media-video").scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  nextVideo.play().catch(() => {});
+}));
 
 function burstPetals(amount = 24) {
   if (reducedMotion.matches) return;
