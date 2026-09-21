@@ -2,123 +2,69 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Una carta para ti 🌺</title>
-  <meta name="description" content="Una carta especial, guardada con cariño." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Una carta especial de septiembre, llena de rosas, girasoles y recuerdos." />
+  <title>Septiembre amarillo y rosas 🌻🌹</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
+  <div class="landscape" aria-hidden="true"><div class="sun"></div><div class="sea"></div><div class="sand"></div><span class="shore-detail">🐚</span></div>
   <div class="floating-petals" id="petals" aria-hidden="true"></div>
 
-  <!-- ===== Candado / Código ===== -->
   <div class="lock-gate" id="lockGate">
     <div class="lock-card">
+      <div class="bouquet" aria-hidden="true"><span class="flower-emoji">🌹</span><span class="flower-emoji">🌻</span></div>
       <span class="lock-icon">🔒</span>
       <h1>Esta carta es solo para ti</h1>
       <p>Escribe el código para poder leerla.</p>
-
       <form class="lock-form" id="lockForm" autocomplete="off">
-        <input
-          id="codeInput"
-          class="lock-input"
-          type="tel"
-          inputmode="numeric"
-          maxlength="6"
-          placeholder="• • • • • •"
-          aria-label="Código de acceso"
-        />
-        <button class="lock-btn" type="submit">Abrir 🌺</button>
+        <input id="codeInput" class="lock-input" type="password" inputmode="numeric" maxlength="6" placeholder="• • • • • •" aria-label="Código de acceso" aria-describedby="lockError" />
+        <button class="lock-btn" type="submit">Abrir 🌻</button>
       </form>
-
-      <p class="lock-error" id="lockError" hidden>Ese no es el código. Inténtalo otra vez 🫶🏻</p>
+      <p class="lock-error" id="lockError" role="alert" hidden>Ese no es el código. Inténtalo otra vez 🫶🏻</p>
       <p class="lock-hint">Pista: una fecha muy nuestra.</p>
+      <div class="candies" aria-label="Chocolates decorativos"><span class="candy" style="--c:#db7451">m</span><span class="candy" style="--c:#e8ba4c;--r:18deg">m</span><span class="candy" style="--c:#8a526c">m</span><span class="candy" style="--c:#815647;--r:22deg">m</span></div>
     </div>
   </div>
 
-  <!-- ===== Carta (difuminada hasta desbloquear) ===== -->
-  <main class="letter-wrap locked" id="letterWrap">
+  <main class="letter-wrap locked" id="letterWrap" inert>
     <article class="letter">
-      <header class="letter-head reveal">
-        <span class="letter-seal">🌺</span>
-        <p class="letter-greeting">Lau</p>
-        <p class="letter-sub">Una carta para ti 🫶🏻</p>
+      <header class="letter-head">
+        <p class="eyebrow">Un recuerdo para guardar</p>
+        <h1 class="date" tabindex="-1" id="letterTitle">21 <span class="month">de septiembre</span></h1>
+        <p class="headline">Septiembre amarillo y rosas</p>
+        <div class="divider"></div>
+        <div class="bouquet" aria-label="Rosas y girasoles"><span class="flower-emoji" aria-hidden="true">🌹</span><span class="flower-emoji" aria-hidden="true">🌻</span><span class="flower-emoji" aria-hidden="true">🌹</span></div>
+        <p class="text-space letter-greeting">Para ti, con mucho cariño 🌻</p>
       </header>
 
       <div class="letter-body">
-        <p class="reveal">Hace dos meses y medio te conozco y, sinceramente, desde el primer momento hubo algo en ti que me movió de una forma que no esperaba. No sé exactamente qué hiciste ni qué pasó, pero genuinamente empezaste a convertirte en alguien muy especial para mí.</p>
+        <p class="text-space intro">Cada recuerdo merece un lugar bonito. Aquí guardé algunos momentos, colores y sonrisas que hacen especial este septiembre.</p>
+        <section class="carousel" id="photoCarousel" aria-label="Nuestros recuerdos" aria-roledescription="carrusel" tabindex="0">
+          <div class="carousel-window"><div class="carousel-track" id="carouselTrack">
+            <figure class="slide" role="group" aria-label="Foto 1"><img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM.jpeg" alt="Un recuerdo especial" /></figure>
+            <figure class="slide" role="group" aria-label="Foto 2"><img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM (1).jpeg" alt="Otro recuerdo bonito" loading="lazy" /></figure>
+            <figure class="slide" role="group" aria-label="Foto 3"><img src="imagenes/WhatsApp Image 2026-08-09 at 6.08.34 PM.jpeg" alt="Un momento juntos" loading="lazy" /></figure>
+          </div></div>
+          <div class="carousel-controls"><button class="arrow" id="prevPhoto" type="button" aria-label="Foto anterior">‹</button><div class="dots" id="carouselDots"></div><button class="arrow" id="nextPhoto" type="button" aria-label="Foto siguiente">›</button></div>
+          <p class="photo-count" id="photoCount" aria-live="polite"></p>
+        </section>
 
-        <p class="reveal">Mientras escribo esta carta estoy un poco bloqueado, porque hay cosas que siento que son mucho más fáciles de sentir que de explicar. Y tampoco quiero sonar demasiado empalagoso ni llenarte de palabras bonitas solo por decirlas. Quiero hablarte desde lo que realmente siento.</p>
+        <p class="text-space">Y todavía quedan más recuerdos por sumar. Cuando me pases las nuevas foticos, las agregamos aquí para que la carta siga creciendo. 💛</p>
+        <div class="candies" aria-hidden="true"><span class="candy" style="--c:#815647">m</span><span class="candy" style="--c:#e8ba4c;--r:18deg">m</span><span class="candy" style="--c:#c45f70">m</span><span class="candy" style="--c:#79a4a3;--r:20deg">m</span><span class="candy" style="--c:#db7451">m</span></div>
 
-        <!-- Foto 1 -->
-        <figure class="media reveal">
-          <img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM.jpeg" alt="Un recuerdo especial" loading="lazy" />
-        </figure>
+        <section class="videos-section" aria-labelledby="videosTitle"><h2 id="videosTitle">Nuestros videos 🎞️</h2><div class="video-grid">
+          <figure class="media-video"><video id="mainVideo" playsinline muted loop controls preload="metadata" aria-label="Nuestro primer video"><source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM (1).mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></figure>
+          <figure class="media-video"><video playsinline muted loop controls preload="metadata" aria-label="Nuestro segundo video"><source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></figure>
+          <figure class="media-video"><video playsinline muted loop controls preload="metadata" aria-label="Nuestro tercer video"><source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.02 PM.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></figure>
+        </div></section>
 
-        <p class="reveal">En este tiempo me he dado cuenta de que, a pesar de las cosas que hemos vivido y de todo lo que todavía nos falta por conocer el uno del otro, quiero empezar a construir cosas especiales contigo.</p>
-
-        <p class="reveal">Y cuando hablo de construir, no me refiero solamente a imaginar un futuro en el que simplemente estemos juntos o nos apoyemos mutuamente. Quiero que podamos trabajar en algo bonito, algo que crezca con nosotros, que nos haga mejores y que, con el tiempo, pueda llegar a ser incluso más grande que nosotros mismos.</p>
-
-        <!-- Video principal: arranca en 0:02, horizontal -->
-        <figure class="media media-video media-rotate reveal">
-          <video
-            id="mainVideo"
-            class="video-horizontal"
-            playsinline
-            muted
-            loop
-            controls
-            preload="metadata"
-            poster=""
-          >
-            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM (1).mp4#t=2" type="video/mp4" />
-            Tu navegador no puede reproducir este video.
-          </video>
-        </figure>
-
-        <p class="reveal">No quiero decirte palabras exageradas ni prometerte cosas imposibles. Solo quiero ser sincero contigo: me haces feliz, disfruto muchísimo estar a tu lado y cada día tengo más ganas de seguir conociéndote, de compartir nuevas experiencias contigo y de descubrir qué podemos construir juntos.</p>
-
-        <p class="reveal">También creo mucho que Dios pone personas en nuestro camino por alguna razón, y siento que tú llegaste al mío por una razón muy bonita.</p>
-
-        <!-- Foto 2 -->
-        <figure class="media media-full reveal">
-          <img src="imagenes/WhatsApp Image 2026-08-09 at 5.43.02 PM (1).jpeg" alt="Otro recuerdo bonito" loading="lazy" />
-        </figure>
-
-        <p class="reveal">Cuando te conocí, yo no estaba buscando a nadie. En realidad, estaba buscándome a mí mismo. Estaba intentando conocerme mejor, crecer y trabajar todos los días para convertirme en la mejor versión que puede ser Sebastián. Y eso sigue siendo algo que quiero hacer por mí, pero ahora siento que también tengo una motivación más para seguir dando lo mejor de mí.</p>
-
-        <p class="reveal">No porque mi felicidad dependa de ti, sino porque compartir mi camino contigo me inspira a seguir creciendo, a ser mejor y a cuidar lo bonito que poco a poco hemos ido creando.</p>
-
-        <!-- Video secundario -->
-        <figure class="media media-video reveal">
-          <video class="video-horizontal" playsinline muted loop controls preload="metadata">
-            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.01 PM.mp4" type="video/mp4" />
-          </video>
-        </figure>
-
-        <p class="reveal">No sé exactamente qué nos espera más adelante, y creo que tampoco tenemos que saberlo todo desde ahora. Lo que sí sé es que quiero seguir descubriéndolo contigo.</p>
-
-        <!-- Video de cierre -->
-        <figure class="media media-video reveal">
-          <video class="video-horizontal" playsinline muted loop controls preload="metadata">
-            <source src="imagenes/WhatsApp Video 2026-08-09 at 5.43.02 PM.mp4" type="video/mp4" />
-          </video>
-        </figure>
-
-        <p class="reveal letter-turn">Y bueno…</p>
-
-        <!-- Foto final (antes del último párrafo) -->
-        <figure class="media media-full reveal">
-          <img src="imagenes/WhatsApp Image 2026-08-09 at 6.08.34 PM.jpeg" alt="Una foto para cerrar" loading="lazy" />
-        </figure>
-
-        <p class="reveal letter-question">Después de todo esto, hay una pregunta que para mí es muy importante.</p>
-
-        
+        <p class="text-space letter-question">Que nunca falten rosas para celebrar y girasoles para iluminar los días. 🌹🌻</p>
+        <p class="text-space signature">Con cariño,<br />para ti 💛</p>
+        <footer class="letter-footer" aria-hidden="true"><div class="divider"></div>🌹 &nbsp; 🌻 &nbsp; 🐚</footer>
       </div>
     </article>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>

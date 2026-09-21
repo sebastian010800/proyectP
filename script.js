@@ -1,80 +1,118 @@
-/* ===== Código de acceso ===== */
 const CODE = "260809";
-
 const gate = document.getElementById("lockGate");
 const form = document.getElementById("lockForm");
 const input = document.getElementById("codeInput");
 const errorMsg = document.getElementById("lockError");
 const letterWrap = document.getElementById("letterWrap");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function unlock() {
   gate.classList.add("hidden");
   letterWrap.classList.remove("locked");
+  letterWrap.inert = false;
   document.body.style.overflow = "";
-  // Arranca los reveals que ya estén en pantalla
-  setTimeout(() => burstPetals(30), 300);
+  document.getElementById("letterTitle").focus();
+  setTimeout(() => burstPetals(28), 300);
 }
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const value = input.value.trim();
-  if (value === CODE) {
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (input.value.trim() === CODE) {
     errorMsg.hidden = true;
+    input.removeAttribute("aria-invalid");
     unlock();
-  } else {
-    errorMsg.hidden = false;
-    gate.classList.add("shake");
-    input.value = "";
-    setTimeout(() => gate.classList.remove("shake"), 450);
+    return;
   }
+  errorMsg.hidden = false;
+  input.setAttribute("aria-invalid", "true");
+  gate.classList.add("shake");
+  input.value = "";
+  input.focus();
+  setTimeout(() => gate.classList.remove("shake"), 450);
 });
 
-// Bloquea el scroll del fondo mientras el candado esté visible
 document.body.style.overflow = "hidden";
 
-/* ===== Video principal: arranca en el segundo 2 ===== */
-(function mainVideoStart() {
-  const video = document.getElementById("mainVideo");
-  if (!video) return;
-  const START = 2;
+const carousel = document.getElementById("photoCarousel");
+const track = document.getElementById("carouselTrack");
+const slides = [...track.children];
+const dotsContainer = document.getElementById("carouselDots");
+const count = document.getElementById("photoCount");
+let current = 0;
 
-  function seekStart() {
-    try { if (video.currentTime < START) video.currentTime = START; } catch (_) {}
-  }
+slides.forEach((slide, index) => {
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = "dot";
+  dot.setAttribute("aria-label", `Ver foto ${index + 1}`);
+  dot.addEventListener("click", () => showPhoto(index));
+  dotsContainer.appendChild(dot);
+});
 
-  video.addEventListener("loadedmetadata", seekStart);
-  // Al reiniciar el loop, vuelve al segundo 2 en lugar de al 0
-  video.addEventListener("timeupdate", () => {
-    if (video.currentTime < START - 0.1) video.currentTime = START;
-  });
-  video.addEventListener("seeked", () => {}, { once: true });
-})();
+function showPhoto(index) {
+  current = (index + slides.length) % slides.length;
+  track.style.transform = `translateX(-${current * 100}%)`;
+  slides.forEach((slide, i) => slide.setAttribute("aria-hidden", String(i !== current)));
+  [...dotsContainer.children].forEach((dot, i) => dot.setAttribute("aria-current", String(i === current)));
+  count.textContent = `${current + 1} / ${slides.length}`;
+}
 
-/* ===== Reveal al hacer scroll ===== */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
+document.getElementById("prevPhoto").addEventListener("click", () => showPhoto(current - 1));
+document.getElementById("nextPhoto").addEventListener("click", () => showPhoto(current + 1));
+carousel.addEventListener("keydown", (event) => {
+  if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+  event.preventDefault();
+  showPhoto(current + (event.key === "ArrowRight" ? 1 : -1));
+});
 
-document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+let touchStart = null;
+const carouselWindow = carousel.querySelector(".carousel-window");
+carouselWindow.addEventListener("touchstart", (event) => { touchStart = { x:event.touches[0].clientX, y:event.touches[0].clientY }; }, { passive:true });
+carouselWindow.addEventListener("touchend", (event) => {
+  if (!touchStart) return;
+  const dx = event.changedTouches[0].clientX - touchStart.x;
+  const dy = event.changedTouches[0].clientY - touchStart.y;
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) showPhoto(current + (dx < 0 ? 1 : -1));
+  touchStart = null;
+}, { passive:true });
+carouselWindow.addEventListener("touchcancel", () => { touchStart = null; });
+showPhoto(0);
 
-/* ===== Pétalos flotantes ===== */
-const petalsLayer = document.getElementById("petals");
+document.querySelectorAll(".slide img").forEach((img) => {
+  const showMissing = () => {
+    if (img.hidden) return;
+    img.hidden = true;
+    const message = document.createElement("span");
+    message.className = "missing-photo";
+    message.textContent = "🌻 Esta foto está esperando su lugar.";
+    img.parentElement.appendChild(message);
+  };
+  img.addEventListener("error", showMissing);
+  if (img.complete && !img.naturalWidth) showMissing();
+});
+
+const mainVideo = document.getElementById("mainVideo");
+function seekStart() {
+  if (Number.isFinite(mainVideo.duration) && mainVideo.duration > 2 && mainVideo.currentTime < 2) mainVideo.currentTime = 2;
+}
+mainVideo.addEventListener("loadedmetadata", seekStart);
+mainVideo.addEventListener("timeupdate", seekStart);
+const videos = [...document.querySelectorAll("video")];
+videos.forEach((video) => video.addEventListener("play", () => videos.forEach((other) => { if (other !== video) other.pause(); })));
 
 function burstPetals(amount = 24) {
-  for (let i = 0; i < amount; i++) {
+  if (reducedMotion.matches) return;
+  const layer = document.getElementById("petals");
+  const flowers = ["🌹", "🌻", "🌼", "🌸", "✨"];
+  for (let i = 0; i < amount; i += 1) {
     const petal = document.createElement("span");
     petal.className = "floating-petal";
-    petal.textContent = ["🌺", "💮", "🌸", "✨", "💗"][Math.floor(Math.random() * 5)];
-    petal.style.left = Math.random() * 100 + "vw";
-    petal.style.animationDuration = (3.4 + Math.random() * 4) + "s";
-    petal.style.animationDelay = Math.random() * 0.8 + "s";
-    petal.style.opacity = 0.4 + Math.random() * 0.5;
-    petalsLayer.appendChild(petal);
+    petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+    petal.style.left = `${Math.random() * 100}%`;
+    petal.style.animationDuration = `${4 + Math.random() * 3}s`;
+    petal.style.animationDelay = `${Math.random() * .8}s`;
+    petal.style.opacity = .4 + Math.random() * .5;
+    layer.appendChild(petal);
     setTimeout(() => petal.remove(), 8200);
   }
 }
